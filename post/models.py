@@ -11,8 +11,14 @@ class Post(models.Model):
     image= models.ImageField(upload_to='images/',null=True)
     viewed = models.IntegerField(null=True)
     latest = models.DateTimeField(null=True)
-
     #category = models.ForeignKey(Categories, on_delete=models.CASCADE)
+
+
+
+    def __str__(self) -> str:
+        return self.title
+
+    
     
     
     class Meta:
@@ -23,4 +29,5 @@ class Replies(models.Model):
     post=models.ForeignKey(Post,on_delete=models.CASCADE)
     reply_txt=models.CharField(max_length=250,null=True)
     reply_time=models.DateTimeField(auto_now=True)
+    replyCount=models.IntegerField(null=True)
     

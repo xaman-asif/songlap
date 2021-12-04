@@ -11,10 +11,9 @@ from post.models import Post
 def Posts(request):
   form= UserPostForm()
 
-  
+  posts=Post.objects.all()
 
-
-  context= {'form':form}
+  context= {'form':form,'posts':posts}
   return render(request,'post/index.html',context)
 
 
@@ -31,12 +30,15 @@ def uploadPost(request):
 
 
 
-  # if request.method=='POST':
-  #   Post.objects.create(
-  #     title=request.POST.get('title'),
-  #     description=request.POST.get('description'),
-  #     image=request.POST.get('image')
-  #   )
+  if request.method=='POST':
+    Post.objects.create(
+      title=request.POST.get('title'),
+      description=request.POST.get('description'),
+      image=request.POST.get('image')
+    )
 
  # return redirect('post')
+
+
+
 

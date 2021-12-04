@@ -5,13 +5,22 @@ from home.models import Categories
 
 # Create your models here.
 class Post(models.Model):
-    #id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200)
-    description = models.TextField()
+    description = models.TextField(null=True)
     publish = models.DateTimeField(auto_now_add=True)
-    
-    viewed = models.IntegerField()
-    replies = models.IntegerField()
-    latest = models.DateTimeField()
+    image= models.ImageField(upload_to='images/',null=True)
+    viewed = models.IntegerField(null=True)
+    latest = models.DateTimeField(null=True)
 
-    category = models.ForeignKey(Categories, on_delete=models.CASCADE)
+    #category = models.ForeignKey(Categories, on_delete=models.CASCADE)
+    
+    
+    class Meta:
+     ordering=['-publish']
+
+
+class Replies(models.Model):
+    post=models.ForeignKey(Post,on_delete=models.CASCADE)
+    reply_txt=models.CharField(max_length=250,null=True)
+    reply_time=models.DateTimeField(auto_now=True)
+    

@@ -8,7 +8,7 @@ from home import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('post/',include('post.urls')),
-    path(r'', views.home),
+    path(r'', views.home,name='home'),
     path('<str:category_pk>', views.viewcategory, name='category'),
   
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

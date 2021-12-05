@@ -4,7 +4,7 @@
 
 
 <div>
-<form class="mx-5 my-5 " enctype="multipart/form-data" method="POST" action="{% url 'upload' %}" >
+<form class="mx-5 my-5 " enctype="multipart/form-data" method="POST" action="{% url 'upload' %}?category={{category}}">
   {% csrf_token %}
 
   {{ form.as_p }}

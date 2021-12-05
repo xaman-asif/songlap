@@ -1,28 +1,43 @@
+from django import forms
 from django.db import models
-from django.utils.translation import activate
-from home.models import Categories
+from django.forms import widgets
+
+
+
+
+
+
+
+
+class PostCategory(models.Model):
+    name = models.CharField(max_length=20,null=True)
+
+    def __str__(self):
+        return self.name
+
 
 
 # Create your models here.
 class Post(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=20)
     description = models.TextField(null=True)
     publish = models.DateTimeField(auto_now_add=True)
     image= models.ImageField(upload_to='images/',null=True)
     viewed = models.IntegerField(null=True)
     latest = models.DateTimeField(null=True)
-    #category = models.ForeignKey(Categories, on_delete=models.CASCADE)
+    category = models.ForeignKey(PostCategory, on_delete=models.CASCADE)
 
 
-
+    
     def __str__(self) -> str:
         return self.title
-
-    
-    
+         
     
     class Meta:
-     ordering=['-publish']
+      ordering=['-publish']
+    #   widgets = {
+    #            'class': 'firstName form-control bg-white border-left-0 border-md'
+    #       }
 
 
 class Replies(models.Model):

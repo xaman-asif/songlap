@@ -19,7 +19,8 @@ class PostCategory(models.Model):
 
 # Create your models here.
 class Post(models.Model):
-    title = models.CharField(max_length=20)
+    user_name=models.CharField(max_length=100,blank=True)
+    title = models.CharField(max_length=250)
     description = models.TextField(null=True)
     publish = models.DateTimeField(auto_now_add=True)
     image= models.ImageField(upload_to='images/',null=True)
@@ -30,7 +31,7 @@ class Post(models.Model):
     class Meta:
       ordering=['-publish']
      
-
+   
 
     
     def __str__(self) -> str:

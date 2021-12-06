@@ -1,21 +1,24 @@
 {% include 'navbar.html' %}
 {% load widget_tweaks %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'post/styles/style.css' %}">
 
 
-
+<div class="container"> 
 
 <div class="text-center m-auto w-50">
 <form class="mx-5 my-5 " enctype="multipart/form-data" method="POST" action="{% url 'upload' %}?category={{category}}">
   {% csrf_token %}
+   
+  {{ form.user_name |add_class:"form-control my-2" |append_attr:"placeholder: Enter Your name (optional)" }}
 
-  {{ form.title |add_class:"form-control my-2"}}
-  {{form.description|add_class:"form-control my-2"}}
+  {{ form.title |add_class:"form-control my-2" |append_attr:"placeholder: Enter post title" }}
+  {{form.description|add_class:"form-control my-2"|append_attr:"placeholder: Enter description" }}
   {{form.image|add_class:"form-control my-2"}}
-  {{form.category|add_class:"form-control my-2"}}
+  {{form.category|add_class:"form-control my-2 "}}
   
   </div>
-
-
 
   {% comment %} {{ form.as_p }} {% endcomment %}
 
@@ -42,19 +45,52 @@
 
 <div>
   {% for post in posts %}
-  <div class="my-3 shadow-lg w-50 text-center m-auto py-3">
-  <h1>{{post.title}}</h1>
-  <p>{{post.description}}</p>
+  <div class="my-3 py-3">
 
-    {% if post.image %}
-    <img src="{{ post.image.url }}">
+    <div class="row m-3 shadow"> 
+
+      <div class="col-lg-6 p-3">
+        {% if post.image %}
+    <img class="img-fluid p-3" src="{{ post.image.url }}">
     {% endif %}
+      </div>
+
+
+      <div class="col-lg-6 p-5">
+
+         
+        <img class="img-fluid  user-avater d-inline" src="{% static 'post/images/user_avatar.png' %}">
+
+        {% if post.user_name %}
+        <h2 class="ms-2 d-inline username">{{post.user_name}} </h2>
+        {% else %}
+        <h2 class="ms-2 d-inline username">Anonymous User</h2>
+        {% endif %}
+        <p>{{post.publish |timesince}} ago </p>
+        
+        <h4>{{post.title|truncatewords:10}}</h4>
+        <p>{{post.description|truncatewords:100}}</p>
+
+      
+      </div>
+
+         <div class=" text-center py-3 mx-3 m-auto">
+          <button class="btn btn-danger mx-2"><i class="far fa-trash-alt"></i></button>
+          <button class="btn btn-info mx-2"><i class="fas fa-edit"></i></button>
+          <button class="btn btn-success mx-2"><i class="fas fa-comment-alt"></i> </button>
+        </div>
+  
+
+
+
+  
+   
     
-    <div class="mt-3">
-    <button>Edit</button>
-    <button>Delete</button>
+    
+   
   </div>
   </div>
 
   {% endfor %}
+</div>
 </div>

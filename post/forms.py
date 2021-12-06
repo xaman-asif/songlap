@@ -8,7 +8,7 @@ class UserPostForm(ModelForm):
 
     class Meta:  
         model = Post
-        fields = ['title','description','image','category']
+        fields = ['title','description','image','category','user_name']
 
         # widgets = {
         #     'category': forms.HiddenInput(),

@@ -4,11 +4,9 @@
 <div class="ui text container">
 	<div class="ui comments">
 	  <div class="comment">
-	    <a class="avatar">
-	      <img src="/images/avatar/small/steve.jpg">
-	    </a>
+	   
 	    <div class="content">
-	      <a class="author">Steve Jobes</a>
+	      <a class="author">User</a>
 	      <div class="metadata">
 	        <div class="date">2 days ago</div>
 	      </div>
@@ -19,15 +17,14 @@
 	        <a class="reply active">Reply</a>
 	      </div>
 	      <form class="ui reply form"method="POST" action="{% url 'reply' read_post.id %}">
+	      	{% csrf_token %}
 	        <div class="field">
 	          <textarea name="content" placeholder="reply"></textarea>
 	        </div>
 	        <div class="field">
 	          <input type="hidden" name="custId" value="{{read_post.id}}">
 	        </div>
-	        <div class="ui primary submit labeled icon button">
-	          <i class="icon edit"></i> Add Reply
-	        </div>
+	        <button class="ui reply blue button" type="submit">Add reply </button>
 	      </form>
 	    </div>
 	  </div>

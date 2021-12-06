@@ -1,23 +1,44 @@
 {% include 'navbar.html' %}
+{% load widget_tweaks %}
 
 
 
 
-<div>
+<div class="text-center m-auto w-50">
 <form class="mx-5 my-5 " enctype="multipart/form-data" method="POST" action="{% url 'upload' %}?category={{category}}">
   {% csrf_token %}
 
-  {{ form.as_p }}
+  {{ form.title |add_class:"form-control my-2"}}
+  {{form.description|add_class:"form-control my-2"}}
+  {{form.image|add_class:"form-control my-2"}}
+  {{form.category|add_class:"form-control my-2"}}
+  
+  </div>
+
+
+
+  {% comment %} {{ form.as_p }} {% endcomment %}
+
+ {% comment %} <div class="form-control">{{ form.title }}</div> 
+  {{form.description}}
+  {{form.image}} {% endcomment %}
+
 
    {% comment %} <input class="form-control" type="text" name="title" placeholder="Enter title">
    <textarea class="form-control" type="text" name="description" ></textarea>
    <input class="form-control" type="file" name="image">  {% endcomment %}
 
-   <button type="submit">Submit</button>
+  <div class="text-center">  <button class="btn btn-success w-25" type="submit">Submit</button> </div>
 
 </form>
 
 </div>
+
+
+
+
+
+
 
 <div>
   {% for post in posts %}

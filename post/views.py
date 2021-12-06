@@ -1,9 +1,9 @@
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.core.files.storage import FileSystemStorage
-from post.forms import UserPostForm
+from post.forms import UserPostForm, userPostCategory
 from django.db.models import Q
-from post.models import Post
+from post.models import Post, PostCategory
 
 # Create your views here.
 
@@ -25,6 +25,8 @@ def uploadPost(request):
 
   if request.method == "POST":
     form = UserPostForm(request.POST, request.FILES)
+    post_category=userPostCategory(request.POST or None)
+
 
     #category=request.GET.get('category')
 
@@ -35,13 +37,21 @@ def uploadPost(request):
 
 
     if form.is_valid():
-      instance=form.save()
 
+      form.save()
 
-      instance = form.save(commit=False)
-      instance.category= request.GET.get('category')
-      instance.save()
+     # instance = form.save(commit=False)
+
+      # for obj in instance:
+      #   obj.foreign_key = 1
+      #   obj.save()
+
+    #  instance.category= request.GET.get('category')
+
+     # instance.save()
       
+      
+
       return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 

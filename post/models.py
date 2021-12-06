@@ -10,7 +10,7 @@ from django.forms import widgets
 
 
 class PostCategory(models.Model):
-    name = models.CharField(max_length=20,null=True)
+    name = models.CharField(max_length=20,null=True, default='',blank=True)
 
     def __str__(self):
         return self.name
@@ -25,7 +25,11 @@ class Post(models.Model):
     image= models.ImageField(upload_to='images/',null=True)
     viewed = models.IntegerField(null=True)
     latest = models.DateTimeField(null=True)
-    category = models.ForeignKey(PostCategory, on_delete=models.CASCADE)
+    category = models.ForeignKey(PostCategory, on_delete=models.CASCADE, default='', blank=True)
+
+    class Meta:
+      ordering=['-publish']
+     
 
 
     
@@ -33,8 +37,7 @@ class Post(models.Model):
         return self.title
          
     
-    class Meta:
-      ordering=['-publish']
+    
     #   widgets = {
     #            'class': 'firstName form-control bg-white border-left-0 border-md'
     #       }

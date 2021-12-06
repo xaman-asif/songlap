@@ -8,6 +8,7 @@ from home import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('post/',include('post.urls')),
+    path('',include('reply.urls')),
     path(r'', views.home,name='home'),
     path('<str:category_pk>', views.viewcategory, name='category'),
   

@@ -21,7 +21,7 @@
        <div class="content">
 	       <a class="author">User</a>
 	       <div class="metadata">
-	         <div class="date">{{ m.reply_time }}</div>
+	         <div class="date">{{ m.reply_time |timesince }} ago</div>
 	       </div>
 	       <div class="text">
 	         {{ m.reply_txt }}

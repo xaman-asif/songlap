@@ -16,8 +16,8 @@
   {{ form.title |add_class:"form-control my-2" |append_attr:"placeholder: Enter post title" }}
   {{form.description|add_class:"form-control my-2"|append_attr:"placeholder: Enter description" }}
   {{form.image|add_class:"form-control my-2"}}
-  {{form.category|add_class:"form-control my-2 "}}
-  
+  {% comment %} {{form.category|add_class:"form-control my-2 "|append_attr:"placeholder: Enter description" }} {% endcomment %}
+  <input type="hidden" name="id" value="{{id}}">
   </div>
 
   {% comment %} {{ form.as_p }} {% endcomment %}

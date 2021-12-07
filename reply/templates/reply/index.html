@@ -2,21 +2,34 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
 <div class="ui text container">
-	<div class="ui comments">
-	  <div class="comment">
-	   
-	    <div class="content">
-	      <a class="author">User</a>
-	      <div class="metadata">
-	        <div class="date"> {{ read_post.title }}</div>
-	      </div>
-	      <div class="text">
-	        {{ read_post.description }}
-	      </div>
-	      <div class="actions">
-	        <a class="reply active">Reply</a>
-	      </div>
-	      <form class="ui reply form"method="POST" action="{% url 'reply' read_post.id %}">
+   
+   
+	
+      <div class="content">
+	    <div class="header">User</div>
+	    <div class="meta">
+	      <a>read_post.title</a>
+	    </div>
+	    <p> {{ read_post.description }}</p>
+      </div>
+    
+
+<div class="ui comments">
+  <div class="comment">
+     {% for m in rep %}
+               
+       <div class="content">
+	       <a class="author">User</a>
+	       <div class="metadata">
+	         <div class="date">{{ m.reply_time }}</div>
+	       </div>
+	       <div class="text">
+	         {{ m.reply_txt }}
+	       </div>
+       </div>
+    {% endfor %}
+
+    <form class="ui reply form"method="POST" action="{% url 'reply' read_post.id %}">
 	      	{% csrf_token %}
 	        <div class="field">
 	          <textarea name="content" placeholder="reply"></textarea>
@@ -25,11 +38,11 @@
 	          <input type="hidden" name="custId" value="{{read_post.id}}">
 	        </div>
 	        <button class="ui reply blue button" type="submit">Add reply </button>
-	      </form>
-	    </div>
-	  </div>
-	</div>
+	 </form>
+  </div>
+</div>
 	
 </div>
 	
-	  
+
+

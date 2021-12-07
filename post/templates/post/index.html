@@ -7,7 +7,7 @@
 
 <div class="container"> 
 
-<div class="text-center m-auto w-50">
+<div class="text-center m-auto w-50 form-div">
 <form class="mx-5 my-5 " enctype="multipart/form-data" method="POST" action="{% url 'upload' %}?category={{category}}">
   {% csrf_token %}
    
@@ -16,8 +16,8 @@
   {{ form.title |add_class:"form-control my-2" |append_attr:"placeholder: Enter post title" }}
   {{form.description|add_class:"form-control my-2"|append_attr:"placeholder: Enter description" }}
   {{form.image|add_class:"form-control my-2"}}
-  {{form.category|add_class:"form-control my-2 "}}
-  
+  {% comment %} {{form.category|add_class:"form-control my-2 "|append_attr:"placeholder: Enter description" }} {% endcomment %}
+  <input type="hidden" name="id" value="{{id}}">
   </div>
 
   {% comment %} {{ form.as_p }} {% endcomment %}
@@ -77,7 +77,7 @@
          <div class=" text-center py-3 mx-3 m-auto">
           <button onclick=window.location.href="{% url 'delete_post' %}?id={{post.id}}" class="btn btn-danger mx-2"><i class="far fa-trash-alt"></i></button>
           <button onclick=window.location.href="{% url 'home' %}?id={{post.id}}" class="btn btn-info mx-2"><i class="fas fa-edit"></i></button>
-          <button onclick=window.location.href="{% url 'home' %}?id={{post.id}}" class="btn btn-success mx-2"><i class="fas fa-comment-alt"></i> </button>
+          <button onclick=window.location.href="http://127.0.0.1:8000/reply/{{post.id}}" class="btn btn-success mx-2"><i class="fas fa-comment-alt"></i> </button>
         </div>
   
 

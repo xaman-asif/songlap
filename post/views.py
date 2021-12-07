@@ -12,10 +12,11 @@ def Posts(request):
   form= UserPostForm()
 
   category=request.GET.get('category')
+  id=request.GET.get('id')
 
   posts=Post.objects.filter(Q(category__name__contains=category) )
   
-  context= {'form':form,'posts':posts,'category':category}
+  context= {'form':form,'posts':posts,'category':category,'id':id}
   return render(request,'post/index.html',context)
 
 
@@ -25,7 +26,7 @@ def uploadPost(request):
 
   if request.method == "POST":
     form = UserPostForm(request.POST, request.FILES)
-    post_category=userPostCategory(request.POST or None)
+   # post_category=userPostCategory(request.POST or None)
 
 
     #category=request.GET.get('category')
@@ -38,17 +39,20 @@ def uploadPost(request):
 
     if form.is_valid():
 
-      form.save()
+      #form.save()
 
-     # instance = form.save(commit=False)
+      instance = form.save(commit=False)
+      id=request.POST.get('id')
 
-      # for obj in instance:
-      #   obj.foreign_key = 1
-      #   obj.save()
+      category=PostCategory.objects.get(id=id)
 
-    #  instance.category= request.GET.get('category')
+        # for obj in instance:
+        #   obj.foreign_key = 1
+        #   obj.save()
 
-     # instance.save()
+      instance.category= category
+
+      instance.save()
       
       
 

@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
 
-  path('',views.Reply,name='reply')
+  path('/<int:id>',views.Reply,name='reply'),
+  path('delete_reply/',views.DeleteReply,name='delete_reply')
     
 ]

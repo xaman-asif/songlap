@@ -9,9 +9,13 @@ from django.shortcuts import redirect, render
 
 def Reply(request,id):
   s1=Post.objects.get(id=id)
+  context = { 
+    'read_post': Post.objects.get(id=id),
+    'rep': Replies.objects.filter(post=id)
+  }
 
   if (request.method == 'GET'):
-    return render(request,'reply/index.html',{'read_post':s1})
+    return render(request,'reply/index.html',context)
   elif (request.method == 'POST'):	
 
 
@@ -26,28 +30,4 @@ def Reply(request,id):
     r.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-    
-    '''
-   p1=request.POST.get('content','')
-   p2=request.POST.get('custId','')
-   b = Replies(post=p1, reply_txt=p2)
-   b.save()
-   messages.info(request,"replied")
-   return redirect('reply')
 
-   '''
-
-    #category=request.GET.get('category')
-
-    # Post.objects.create(
-    #  category=category
-    # )
-    
-'''
-def See(request):
-	context = { 
-		'posts': Replies.objects.all()
-	}
-	return render(request, 'reply/see_reply.html', context)
-
-	'''	

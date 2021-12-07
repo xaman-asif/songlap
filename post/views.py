@@ -66,5 +66,18 @@ def uploadPost(request):
  # return redirect('post')
 
 
+def DeletePost(request):
+  key = request.GET.get('id')
+  del_post = Post.objects.get(id = key)
+  del_post.delete()
+
+  return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+  
+
+
+
+
+ 
 
 

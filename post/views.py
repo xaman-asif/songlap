@@ -26,15 +26,13 @@ def uploadPost(request):
 
   if request.method == "POST":
     form = UserPostForm(request.POST, request.FILES)
-   # post_category=userPostCategory(request.POST or None)
-
-
-    #category=request.GET.get('category')
-
-    # Post.objects.create(
-    #  category=category
-    # )
-    
+    '''
+    post_category=userPostCategory(request.POST or None)
+    category=request.GET.get('category')
+    Post.objects.create(
+    category=category
+     )
+    '''
 
 
     if form.is_valid():
@@ -45,11 +43,11 @@ def uploadPost(request):
       id=request.POST.get('id')
 
       category=PostCategory.objects.get(id=id)
-
-        # for obj in instance:
-        #   obj.foreign_key = 1
-        #   obj.save()
-
+      '''
+      for obj in instance:
+      obj.foreign_key = 1
+      obj.save()
+      '''
       instance.category= category
 
       instance.save()
@@ -59,15 +57,15 @@ def uploadPost(request):
       return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-
-  # if request.method=='POST':
-  #   Post.objects.create(
-  #     title=request.POST.get('title'),
-  #     description=request.POST.get('description'),
-  #     image=request.POST.get('image')
-  #   )
-
- # return redirect('post')
+'''
+  if request.method=='POST':
+    Post.objects.create(
+      title=request.POST.get('title'),
+      description=request.POST.get('description'),
+      image=request.POST.get('image')
+     )
+  return redirect('post')
+'''
 
 
 def DeletePost(request, id):

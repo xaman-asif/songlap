@@ -11,6 +11,5 @@ urlpatterns = [
     path('reply',include('reply.urls')),
     path(r'', views.home,name='home'),
     path('<str:category_pk>', views.viewcategory, name='category'),
-    path('delete_post/', include('post.urls')),
   
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

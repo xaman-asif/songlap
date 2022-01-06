@@ -5,6 +5,6 @@ urlpatterns = [
 
   path('',views.Posts,name='post'),
   path('upload/',views.uploadPost, name ='upload'),
-  path('delete_post/',views.DeletePost,name='delete_post')
+  path('<id>/delete_post/',views.DeletePost,name='delete_post')
       
 ]

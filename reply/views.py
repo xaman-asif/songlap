@@ -8,7 +8,7 @@ from django.shortcuts import redirect, render
 
 
 def Reply(request,id):
-  s1=Post.objects.get(id=id)
+  obj =Post.objects.get(id=id)
   context = { 
     'read_post': Post.objects.get(id=id),
     'rep': Replies.objects.filter(post=id)
@@ -23,7 +23,7 @@ def Reply(request,id):
     category2=request.POST.get('custId')
 
     r=Replies.objects.create(
-     post=s1,
+     post=obj,
      reply_txt=category1
 
      )

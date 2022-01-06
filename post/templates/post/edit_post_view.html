@@ -1,0 +1,54 @@
+{% include 'navbar.html' %}
+{% load static %}
+
+<div>
+ 
+  <div class="my-3 py-3">
+
+    <div class="row m-3 shadow"> 
+
+      <div class="col-lg-6 p-3">
+        {% if post.image %}
+    <img class="img-fluid p-3" src="{{ post.image.url }}">
+    {% endif %}
+      </div>
+
+
+      <div class="col-lg-6 p-5">
+
+         
+        <img class="img-fluid  user-avater d-inline" src="{% static 'post/images/user_avatar.png' %}">
+
+        {% if post.user_name %}
+
+        
+ 
+        <h2 class="ms-2 d-inline username">{{post.user_name}} </h2>
+
+        {% else %}
+
+        <h2 class="ms-2 d-inline username">Anonymous User</h2>
+
+        {% endif %}
+        <p>{{post.publish |timesince}} ago </p>
+        
+
+        <form action="{% url 'edit' %}?id={{id}}" method="POST"> 
+          {% csrf_token %}
+
+          <input class="form-control my-2" type="text" name='title' value="{{post.title}}" />
+          <textarea class="form-control my-2" type="text" name='description'>{{post.description}}</textarea>
+          <input class="btn btn-success" name="submit" type="submit"/>
+
+     
+          
+      </form>
+      
+    
+  
+   
+  </div>
+  </div>
+
+
+</div>

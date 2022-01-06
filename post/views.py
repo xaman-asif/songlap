@@ -73,6 +73,33 @@ def uploadPost(request):
 
 
 
+def editPostView(request):
+
+  id=request.GET.get('id')
+  post=Post.objects.get(id=id)
+
+  return render(request,'post/edit_post_view.html',{'post':post,'id':id})
+
+
+
+def editPost(request):
+  id=request.GET.get('id')
+  title=request.POST.get('title')
+  description=request.POST.get('description')
+
+
+  post=Post.objects.filter(id=id).update(
+    title=title,
+    description=description
+  )
+
+  return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+
+
+
+
 
 
 

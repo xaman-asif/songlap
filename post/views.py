@@ -1,5 +1,5 @@
-from django.http.response import HttpResponse, HttpResponseRedirect
-from django.shortcuts import redirect, render
+from django.http.response import (HttpResponse, HttpResponseRedirect)
+from django.shortcuts import (redirect, render, get_object_or_404)
 from django.core.files.storage import FileSystemStorage
 from post.forms import UserPostForm, userPostCategory
 from django.db.models import Q
@@ -26,14 +26,6 @@ def uploadPost(request):
 
   if request.method == "POST":
     form = UserPostForm(request.POST, request.FILES)
-   # post_category=userPostCategory(request.POST or None)
-
-
-    #category=request.GET.get('category')
-
-    # Post.objects.create(
-    #  category=category
-    # )
     
 
 
@@ -45,11 +37,7 @@ def uploadPost(request):
       id=request.POST.get('id')
 
       category=PostCategory.objects.get(id=id)
-
-        # for obj in instance:
-        #   obj.foreign_key = 1
-        #   obj.save()
-
+    
       instance.category= category
 
       instance.save()
@@ -60,14 +48,7 @@ def uploadPost(request):
 
 
 
-  # if request.method=='POST':
-  #   Post.objects.create(
-  #     title=request.POST.get('title'),
-  #     description=request.POST.get('description'),
-  #     image=request.POST.get('image')
-  #   )
 
- # return redirect('post')
 
 
 
@@ -105,13 +86,20 @@ def editPost(request):
 
 
 
-def DeletePost(request):
-  key = request.GET.get('id')
-  del_post = Post.objects.get(id = key)
-  del_post.delete()
 
-  return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+def DeletePost(request, id):
 
+  context ={}
+
+  obj = get_object_or_404(Post, id = id)
+
+  if request.method == "POST":
+    obj.delete()
+
+    return HttpResponseRedirect("/")
+  return render(request, "post/delete_post.html", context)
+
+ 
   
 
 

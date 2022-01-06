@@ -11,8 +11,10 @@ urlpatterns = [
     path('post/',include('post.urls')),
     path('reply',include('reply.urls')),
 
+
    
+ 
    
-   
+
   
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

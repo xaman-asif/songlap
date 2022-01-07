@@ -4,6 +4,9 @@ from django.core.files.storage import FileSystemStorage
 from post.forms import UserPostForm, userPostCategory
 from django.db.models import Q
 from post.models import Post, PostCategory
+from django.http import JsonResponse
+
+from django.core import serializers
 
 # Create your views here.
 
@@ -11,13 +14,15 @@ from post.models import Post, PostCategory
 def Posts(request):
   form= UserPostForm()
 
+ 
+
   category=request.GET.get('category')
   id=request.GET.get('id')
 
-  posts=Post.objects.filter(Q(category__name__contains=category) )
+  posts=list(Post.objects.filter(Q(category__name__contains=category) ).values())
   
   context= {'form':form,'posts':posts,'category':category,'id':id}
-  return render(request,'post/index.html',context)
+  return JsonResponse({'post':posts,'id':id},safe=False)
 
 
 

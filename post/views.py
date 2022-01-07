@@ -11,17 +11,18 @@ from django.core import serializers
 # Create your views here.
 
 
-def Posts(request):
+def Posts(request,category,id):
   form= UserPostForm()
 
  
 
-  category=request.GET.get('category')
-  id=request.GET.get('id')
+  # category=request.GET.get('category')
+  # id=request.GET.get('id')
 
   posts=list(Post.objects.filter(Q(category__name__contains=category) ).values())
   
   context= {'form':form,'posts':posts,'category':category,'id':id}
+  
   return JsonResponse({'post':posts,'id':id},safe=False)
 
 

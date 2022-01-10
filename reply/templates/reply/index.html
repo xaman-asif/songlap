@@ -28,7 +28,8 @@
 	         {{ m.reply_txt }}
 	       </div>
 	
-	  <button onclick=window.location.href="{% url 'delete_reply' %}?id={{m.id}}" class="btn btn-danger mx-2"><i class="far fa-trash-alt"></i></button>       
+	  <button onclick=window.location.href="{% url 'delete_reply' %}?id={{m.id}}" class="btn btn-danger mx-2"><i class="far fa-trash-alt"></i></button>    
+	  <a href="{% url 'editreply' m.id read_post.id %}"><i class="pencil icon"></i></a>   
 	 </div>
     {% endfor %}
 

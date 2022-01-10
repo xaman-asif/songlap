@@ -19,11 +19,14 @@ def Posts(request,category,id):
   # category=request.GET.get('category')
   # id=request.GET.get('id')
 
-  posts=list(Post.objects.filter(Q(category__name__contains=category) ).values())
+  posts=list(Post.objects.filter(Q(category__name__contains=category) ))
   
   context= {'form':form,'posts':posts,'category':category,'id':id}
-  
-  return JsonResponse({'post':posts,'id':id},safe=False)
+
+
+  return render(request,'post/index.html',context)
+
+  # return JsonResponse({'post':posts,'id':id},safe=False)
 
 
 
@@ -60,27 +63,29 @@ def uploadPost(request):
 
 
 
-def editPostView(request):
+def editPostView(request,id,category):
 
-  id=request.GET.get('id')
   post=Post.objects.get(id=id)
 
-  return render(request,'post/edit_post_view.html',{'post':post,'id':id})
+  return render(request,'post/edit_post_view.html',{'post':post,'id':id,'category':category})
 
 
 
-def editPost(request):
-  id=request.GET.get('id')
+def editPost(request,id,category):
+ 
   title=request.POST.get('title')
   description=request.POST.get('description')
 
 
-  post=Post.objects.filter(id=id).update(
+  Post.objects.filter(id=id).update(
     title=title,
     description=description
   )
 
-  return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+  
+
+  return HttpResponseRedirect('/post/'+category+'/'+id)
 
 
 

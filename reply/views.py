@@ -37,3 +37,15 @@ def DeleteReply(request):
 
   return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+def editreply(request,id,post_id):
+ 
+  edit_rep = Replies.objects.get(id = id)
+  
+  context = { 
+    'old_reply': edit_rep,
+    'p_id':post_id
+  }
+
+  if (request.method == 'GET'):
+    print("abal")
+    return render(request, 'reply/edit_reply.html',context)

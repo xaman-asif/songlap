@@ -1,8 +1,8 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
-from django.conf.urls.static import static
-from django.conf import settings
 from home import views
 
 urlpatterns = [
@@ -10,6 +10,7 @@ urlpatterns = [
     path('', include('home.urls')),
     path('post/',include('post.urls')),
     path('reply',include('reply.urls')),
+    path('polls/', include('polls.urls')),
 
 
    

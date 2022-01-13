@@ -33,7 +33,7 @@
         <p>{{post.publish |timesince}} ago </p>
         
 
-        <form action="{% url 'edit' %}?id={{id}}" method="POST"> 
+        <form action="{% url 'edit' category id %}" method="POST"> 
           {% csrf_token %}
 
           <input class="form-control my-2" type="text" name='title' value="{{post.title}}" />

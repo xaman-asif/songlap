@@ -33,22 +33,74 @@
         <p>{{post.publish |timesince}} ago </p>
         
 
-        <form action="{% url 'edit' category id %}" method="POST"> 
-          {% csrf_token %}
-
-          <input class="form-control my-2" type="text" name='title' value="{{post.title}}" />
-          <textarea class="form-control my-2" type="text" name='description'>{{post.description}}</textarea>
-          <input class="btn btn-success" name="submit" type="submit"/>
-
+      
+         <form id="update-form" action=" " method="POST">
+           {% csrf_token %}
+          <input class="form-control my-2" id="title" type="text" name='title' value="{{post.title}}" />
+          <textarea class="form-control my-2" id="description" type="text" name='description'>{{post.description}}</textarea>
+          <button class="btn btn-success" id="submit"> Update </button>
+         </form>
      
           
-      </form>
+     
       
     
   
    
   </div>
   </div>
+
+
+  <script>
+
+    $(function(){
+
+      $("#update-form").submit(function(e) {
+        e.preventDefault();
+    });
+
+
+      $('#submit').click(function(){
+         let post_title = $("#title").val();
+         let post_description = $("#description").val();
+         let csrf=$("input[name=csrfmiddlewaretoken]").val();
+         
+
+         data={title: post_title, description: post_description, csrfmiddlewaretoken: csrf}
+
+         $.ajax({
+           url: "{% url 'edit' category id%}",
+           method: "POST",
+           data: data,
+           success: function(data)
+           {
+             alert(data.status)
+
+           }
+
+
+         })
+
+
+
+
+
+
+
+
+
+
+
+
+     });
+  });
+
+
+    
+  </script>
+
+
+
 
 
 </div>

@@ -1,23 +1,28 @@
-$(document).ready(function () {
-  $("form").submit(function (event) {
-    var formData = {
-      user_name: $(".username").val(),
-      title: $(".title").val(),
-      description: $(".descrition").val(),
-      image: $(".image").val(),
-      
-    };
+$(document).ready(function(){
 
-    $.ajax({
-      type: "POST",
-      url: "post/edit/",
-      data: formData,
-      dataType: "json",
-      encode: true,
-    }).done(function (data) {
-      console.log(data);
-    });
 
-    event.preventDefault();
-  });
+  
+  $('#test').click(function(){
+    var value = $("#inp").val();
+    console.log(value)
 });
+
+
+
+
+
+
+
+
+  
+});
+
+
+
+
+
+
+
+
+
+  

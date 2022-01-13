@@ -11,7 +11,7 @@
 <form class="mx-5 my-5 " enctype="multipart/form-data" method="POST" action="{% url 'upload' %}?category={{category}}">
   {% csrf_token %}
    
-  {{ form.user_name |add_class:"form-control my-2 "  |append_attr:"placeholder: Enter Your name (optional)" }}
+  {{ form.user_name |add_class:"form-control my-2 uname"  |append_attr:"placeholder: Enter Your name (optional)" }}
 
   {{ form.title |add_class:"form-control my-2 title"  |append_attr:"placeholder: Enter post title" }}
   {{form.description|add_class:"form-control my-2 description"|append_attr:"placeholder: Enter description" }}
@@ -79,7 +79,7 @@
          <div class=" text-center py-3 mx-3 m-auto">
 
           <button onclick=window.location.href="{% url 'delete_post' %}?id={{post.id}}" class="btn btn-danger mx-2"><i class="far fa-trash-alt"></i></button>
-          <button onclick=window.location.href="{% url  'edit_post' category post.id %}" class="btn btn-info mx-2"><i class="fas fa-edit"></i></button>
+          <button onclick=window.location.href="{% url  'edit_post' category post.id %}" id="edit-btn" class="btn btn-info mx-2"><i class="fas fa-edit"></i></button>
           <button onclick=window.location.href="{% url 'reply' id=post.id %}" class="btn btn-success mx-2"><i class="fas fa-comment-alt"></i> </button>
         </div>
   
@@ -96,19 +96,25 @@
 
   {% endfor %}
 
-  <h1 id="content"></h1>
+
+  <input type='text' class='inp' name='inp' id='inp'/>
+  <button id="test"> Click Me </button>
+  
 </div>
 
 
-<script type="text/javascript">
-  
-  fetch('http://localhost:8000/post/News/2/')
-  .then(response => response.json())
-  .then(json => {
-  document.getElementById("content").innerHTML = json;
-  })
-  </script>
 
+
+
+
+
+
+<script src="{% static 'post/script/app.js' %}"> 
+
+
+
+  
+</script>
 
 
 

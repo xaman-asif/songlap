@@ -5,6 +5,7 @@ from post.forms import UserPostForm, userPostCategory
 from django.db.models import Q
 from post.models import Post, PostCategory
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 from django.core import serializers
 
@@ -70,11 +71,11 @@ def editPostView(request,id,category):
   return render(request,'post/edit_post_view.html',{'post':post,'id':id,'category':category})
 
 
-
+# @csrf_exempt
 def editPost(request,id,category):
  
-  title=request.POST.get('title')
-  description=request.POST.get('description')
+  title=request.POST['title']
+  description=request.POST['description']
 
 
   Post.objects.filter(id=id).update(
@@ -83,9 +84,12 @@ def editPost(request,id,category):
   )
 
 
+  return JsonResponse({'status':'updated'})
+
+
   
 
-  return HttpResponseRedirect('/post/'+category+'/'+id)
+ # return HttpResponseRedirect('/post/'+category+'/'+id)
 
 
 

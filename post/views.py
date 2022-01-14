@@ -1,17 +1,16 @@
-from django.http.response import (HttpResponse, HttpResponseRedirect)
-from django.shortcuts import (redirect, render, get_object_or_404)
-from django.core.files.storage import FileSystemStorage
-from post.forms import UserPostForm, userPostCategory
-from django.db.models import Q
-from post.models import Post, PostCategory
-from django.http import JsonResponse
-
 from django.core import serializers
+from django.core.files.storage import FileSystemStorage
+from django.db.models import Q
+from django.http import JsonResponse
+from django.http.response import HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect, render
+
+from post.forms import UserPostForm, userPostCategory
+from post.models import Post, PostCategory, Replies
 
 # Create your views here.
 
-
-def Posts(request,category,id):
+def Posts(request,category):
   form= UserPostForm()
 
  
@@ -30,7 +29,7 @@ def Posts(request,category,id):
 
 
 
-def uploadPost(request):
+def uploadPost(request, category):
 
 
   if request.method == "POST":
@@ -43,15 +42,15 @@ def uploadPost(request):
       #form.save()
 
       instance = form.save(commit=False)
-      id=request.POST.get('id')
+      # id=request.POST.get('id')
 
-      category=PostCategory.objects.get(id=id)
+      # category=PostCategory.objects.get(id=id)
     
       instance.category= category
 
       instance.save()
       
-      
+      print(category)
 
       return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
@@ -68,6 +67,7 @@ def editPostView(request,id,category):
   post=Post.objects.get(id=id)
 
   return render(request,'post/edit_post_view.html',{'post':post,'id':id,'category':category})
+  
 
 
 
@@ -82,10 +82,7 @@ def editPost(request,id,category):
     description=description
   )
 
-
-  
-
-  return HttpResponseRedirect('/post/'+category+'/'+id)
+  return redirect('/b/' + category)
 
 
 
@@ -98,7 +95,9 @@ def editPost(request,id,category):
 
 
 
-def DeletePost(request, id):
+def DeletePost(request, category, id):
+
+  print(id)
 
   context ={}
 
@@ -117,5 +116,33 @@ def DeletePost(request, id):
 
 
  
+def Reply(request, category, id):
+  obj =Post.objects.get(id=id)
+  context = { 
+    'read_post': Post.objects.get(id=id),
+    'rep': Replies.objects.filter(post=id)
+  }
 
+  if (request.method == 'GET'):
+    return render(request,'post/reply.html',context)
+  elif (request.method == 'POST'):	
+
+
+    category1=request.POST.get('content')
+    category2=request.POST.get('custId')
+
+    r=Replies.objects.create(
+     post=obj,
+     reply_txt=category1
+
+     )
+    r.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def DeleteReply(request, category, id, rep):
+  #key = request.GET.get('id')
+  del_post = Replies.objects.get(id = rep)
+  del_post.delete()
+
+  return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 

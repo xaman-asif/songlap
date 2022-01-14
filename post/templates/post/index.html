@@ -8,7 +8,7 @@
 <div class="container"> 
 
 <div class="text-center m-auto w-50 form-div">
-<form class="mx-5 my-5 " enctype="multipart/form-data" method="POST" action="{% url 'upload' %}?category={{category}}">
+<form class="mx-5 my-5 " enctype="multipart/form-data" method="POST" action="{% url 'upload' category %}">
   {% csrf_token %}
    
   {{ form.user_name |add_class:"form-control my-2 "  |append_attr:"placeholder: Enter Your name (optional)" }}
@@ -78,9 +78,9 @@
 
          <div class=" text-center py-3 mx-3 m-auto">
 
-          <button onclick=window.location.href="{% url 'delete_post' %}?id={{post.id}}" class="btn btn-danger mx-2"><i class="far fa-trash-alt"></i></button>
+          <button onclick=window.location.href="{% url  'delete_post' category post.id %}" class="btn btn-danger mx-2"><i class="far fa-trash-alt"></i></button>
           <button onclick=window.location.href="{% url  'edit_post' category post.id %}" class="btn btn-info mx-2"><i class="fas fa-edit"></i></button>
-          <button onclick=window.location.href="{% url 'reply' id=post.id %}" class="btn btn-success mx-2"><i class="fas fa-comment-alt"></i> </button>
+          <button onclick=window.location.href="{% url  'reply' category post.id %}" class="btn btn-success mx-2"><i class="fas fa-comment-alt"></i> </button>
         </div>
   
 

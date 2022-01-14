@@ -12,9 +12,9 @@ def home(request):
     return render(request, 'home/index.html', {'categories':categories})
 
 
-def viewcategory(request, category_pk):
-    try:
-        todo = get_object_or_404( PostCategory, pk=category_pk)
-        return redirect("https://www.google.com/")
-    except ValueError:
-        pass
+# def viewcategory(request, category_pk):
+#     try:
+#         todo = get_object_or_404( PostCategory, pk=category_pk)
+#         return redirect("https://www.google.com/")
+#     except ValueError:
+#         pass

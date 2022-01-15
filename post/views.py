@@ -37,12 +37,8 @@ def uploadPost(request):
   if request.method == "POST":
     form = UserPostForm(request.POST, request.FILES)
     
-
-
     if form.is_valid():
-
       #form.save()
-
       instance = form.save(commit=False)
       id=request.POST.get('id')
 
@@ -51,9 +47,9 @@ def uploadPost(request):
       instance.category= category
 
       instance.save()
-      
-      
 
+
+     
       return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 

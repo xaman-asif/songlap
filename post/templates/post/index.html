@@ -8,8 +8,11 @@
 <div class="container"> 
 
 <div class="text-center m-auto w-50 form-div">
-<form class="mx-5 my-5 " enctype="multipart/form-data" method="POST" action="{% url 'upload' %}?category={{category}}">
-  {% csrf_token %}
+
+
+
+ <form id="upload-form" class="mx-5 my-5 " action="{% url 'upload' %}" method= "POST"  enctype="multipart/form-data" >
+  {% csrf_token %} 
    
   {{ form.user_name |add_class:"form-control my-2 uname"  |append_attr:"placeholder: Enter Your name (optional)" }}
 
@@ -17,7 +20,7 @@
   {{form.description|add_class:"form-control my-2 description"|append_attr:"placeholder: Enter description" }}
   {{form.image|add_class:"form-control my-2 image"}}
   {% comment %} {{form.category|add_class:"form-control my-2 "|append_attr:"placeholder: Enter description" }} {% endcomment %}
-  <input type="hidden" name="id" value="{{id}}">
+  <input type="hidden" id="id" name="id" value="{{id}}">
   </div>
 
   {% comment %} {{ form.as_p }} {% endcomment %}
@@ -31,11 +34,18 @@
    <textarea class="form-control" type="text" name="description" ></textarea>
    <input class="form-control" type="file" name="image">  {% endcomment %}
 
-  <div class="text-center">  <button class="btn btn-success w-25" type="submit">Submit</button> </div>
+  <div class="text-center">  <button class="btn btn-success w-25" type="submit" id="upload" >Submit</button> </div>
 
-</form>
+ </form> 
+
+
+
+
+
 
 </div>
+
+
 
 
 
@@ -46,7 +56,6 @@
   <div class="my-3 py-3">
 
     <div class="row m-3 shadow"> 
-
       <div class="col-lg-6 p-3">
         {% if post.image %}
 
@@ -97,24 +106,102 @@
   {% endfor %}
 
 
-  <input type='text' class='inp' name='inp' id='inp'/>
-  <button id="test"> Click Me </button>
   
 </div>
 
 
 
+{% comment %} 
+
+<script>
+
+  $(function(){
 
 
 
-
-
-<script src="{% static 'post/script/app.js' %}"> 
+    $("#upload-form").submit(function(e) {
+      e.preventDefault();
+  });
 
 
 
   
-</script>
+
+
+    $('#upload').click(function(){
+
+
+
+      
+
+    /* 
+   
+      var fd = new FormData();
+      var files = $('.image')[0].files;
+        
+      if(files.length > 0 ){
+        fd.append('file',files[0]);
+
+      }
+
+      */
+ 
+
+
+
+
+       let name= $(".uname").val();
+       let post_title = $(".title").val();
+       let post_description = $(".description").val();
+       let img= $(".image").val();
+       let id= $("#id").val();
+       let files = $('.image')[0].files;
+       let csrf=$("input[name=csrfmiddlewaretoken]").val();
+       
+
+       data={user_name: name, image: files[0], title: post_title, description: post_description, id: id, csrfmiddlewaretoken: csrf}
+      
+
+
+       $.ajax({
+         url: "{% url 'upload' %}",
+         method: "POST",
+         processData: false,
+         contentType: false,
+         dataType: 'json',
+         contentType: 'json',
+         cache: false,
+         data: data,
+         
+         enctype: 'multipart/form-data',
+         success: function(data)
+         {
+           alert(data.status)
+
+         }
+
+
+       });
+
+
+      
+
+
+
+
+      });
+    });
+  
+</script> {% endcomment %}
+
+
+
+
+
+
+
+
+
 
 
 

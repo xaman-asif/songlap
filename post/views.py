@@ -27,7 +27,7 @@ def Posts(request,category,id):
 
   return render(request,'post/index.html',context)
 
-  # return JsonResponse({'post':posts,'id':id},safe=False)
+ # return JsonResponse({'post':posts,'id':id},safe=False)
 
 
 

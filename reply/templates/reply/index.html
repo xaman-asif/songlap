@@ -98,7 +98,7 @@ fetch("{% url 'reply' read_post.id %}", {
   .then(data => { 
         commentDiv = document.createElement("div"); 
         commentDiv.classList.add("comment"); 
-        commentInnerHtml = "<div class='content'><a class='author'>User</a><div class='metadata'><div class='date'>{{ m.reply_time |timesince }} ago</div></div><div class='text'> "+data.replied+"</div><button onclick=window.location.href='{% url 'delete_reply' %}?id={{m.id}}' class='btn btn-danger mx-2'><i class='far fa-trash-alt'></i></button><a href=''><i class='pencil icon'></i></a></div>"; 
+        commentInnerHtml = "<div class='content'><a class='author'>User</a><div class='metadata'><div class='date'></div></div><div class='text'> "+data.replied+"</div><button onclick=window.location.href='{% url 'delete_reply' %}?id={{m.id}}' class='btn btn-danger mx-2'><i class='far fa-trash-alt'></i></button><a href=''><i class='pencil icon'></i></a></div>"; 
         commentDiv.innerHTML = commentInnerHtml; 
         const temp = document.getElementById("temp"); 
         temp.insertBefore(commentDiv, temp.childNodes[0]); 

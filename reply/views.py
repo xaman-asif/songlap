@@ -3,6 +3,8 @@ from django.http.response import HttpResponse,HttpResponseRedirect
 from post.models import Replies
 from post.models import Post
 from django.shortcuts import redirect, render
+from django.http import JsonResponse 
+import json 
 
 # Create your views here.
 

@@ -5,14 +5,16 @@
 <div class="ui text container">
    
    
-	
+  
       <div class="content">
-	    <div class="header">User</div>
-	    <div class="meta">
-	      <a>{{read_post.title}}</a>
-	    </div>
-	    <p> {{ read_post.description }}</p>
+      <div class="header">User</div>
+      <div class="meta">
+        <a>{{read_post.title}}</a>
       </div>
+      <p> {{ read_post.description }}</p>
+       <img class="img-fluid p-3" src="{{ read_post.image.url }}">
+      </div>
+  
     
 
 <div class="ui comments">
@@ -20,32 +22,95 @@
      {% for m in rep %}
                
        <div class="content">
-	       <a class="author">User</a>
-	       <div class="metadata">
-	         <div class="date">{{ m.reply_time |timesince }} ago</div>
-	       </div>
-	       <div class="text">
-	         {{ m.reply_txt }}
-	       </div>
-	
-	  <button onclick=window.location.href="{% url 'delete_reply' %}?id={{m.id}}" class="btn btn-danger mx-2"><i class="far fa-trash-alt"></i></button>       
-	 </div>
-    {% endfor %}
+         <a class="author">User</a>
+         <div class="metadata">
+           <div class="date">{{ m.reply_time |timesince }} ago</div>
+         </div>
+         <div class="text">
+           {{ m.reply_txt }}
+         </div>
+  
+    <button onclick=window.location.href="{% url 'delete_reply' %}?id={{m.id}}" class="btn btn-danger mx-2"><i class="far fa-trash-alt"></i></button>    
+    <a href="{% url 'editreply' m.id read_post.id %}"><i class="pencil icon"></i></a>   
 
-    <form class="ui reply form"method="POST" action="{% url 'reply' read_post.id %}">
-	      	{% csrf_token %}
-	        <div class="field">
-	          <textarea name="content" placeholder="reply"></textarea>
-	        </div>
-	        <div class="field">
-	          <input type="hidden" name="custId" value="{{read_post.id}}">
-	        </div>
-	        <button class="ui reply blue button" type="submit">Add reply </button>
-	 </form>
+    {% endfor %}
+       </div>
+     <div id="temp">
+    <p></p>
+   </div>
+
+    <form class="ui reply form" role="form" id="reply-form" method="POST" action="abc">
+          {% csrf_token %}
+          <div class="field">
+            <textarea name="content" placeholder="reply"></textarea>
+          </div>
+          <div class="field">
+            <input type="hidden" name="custId" value="{{read_post.id}}">
+          </div>
+          <button class="ui reply blue button" id="btn1" type="submit">Add reply </button>
+
+   </form>
+
+
   </div>
 </div>
-	
+<script> 
+  
+  
+const form = document.getElementById("reply-form"); 
+form.addEventListener("submit", (e)=>{ 
+ 
+    e.preventDefault(); 
+  let rep_ly = document.querySelector("textarea").value; 
+  
+ function getCookie(name) { 
+  let cookieValue = null; 
+  if (document.cookie && document.cookie !== '') { 
+      const cookies = document.cookie.split(';'); 
+      for (let i = 0; i < cookies.length; i++) { 
+          const cookie = cookies[i].trim(); 
+          
+          if (cookie.substring(0, name.length + 1) === (name + '=')) { 
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1)); 
+              break; 
+                } 
+            } 
+        } 
+    return cookieValue; 
+} 
+const csrftoken = getCookie('csrftoken'); 
+ 
+ 
+fetch("{% url 'reply' read_post.id %}", { 
+      method: 'POST', 
+      credentials: 'same-origin', 
+      headers:{ 
+          'Accept': 'application/json', 
+          'X-Requested-With': 'XMLHttpRequest',  
+          'X-CSRFToken': csrftoken, 
+  }, 
+      body: JSON.stringify({'rep_ly':rep_ly})  
+      
+  }) 
+  .then(response => { 
+        return response.json()  
+  }) 
+  .then(data => { 
+        commentDiv = document.createElement("div"); 
+        commentDiv.classList.add("comment"); 
+        commentInnerHtml = "<div class='content'><a class='author'>User</a><div class='metadata'><div class='date'></div></div><div class='text'> "+data.replied+"</div><button onclick=window.location.href='{% url 'delete_reply' %}?id={{m.id}}' class='btn btn-danger mx-2'><i class='far fa-trash-alt'></i></button><a href=''><i class='pencil icon'></i></a></div>"; 
+        commentDiv.innerHTML = commentInnerHtml; 
+        const temp = document.getElementById("temp"); 
+        temp.insertBefore(commentDiv, temp.childNodes[0]); 
+        form.reset(); 
+
+  }) 
+ 
+}) 
+ 
+</script> 
+  
 </div>
-	
+
 
 

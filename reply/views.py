@@ -47,10 +47,10 @@ def editreply(request,id,post_id):
   }
 
   if (request.method == 'GET'):
-    print("abal")
+   
     return render(request, 'reply/edit_reply.html',context)
   elif(request.method == 'POST'):
     edit_rep.reply_txt=request.POST.get('content','')
     edit_rep.save()
-    print("hello")
+  
   return redirect('reply',post_id)

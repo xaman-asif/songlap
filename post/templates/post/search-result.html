@@ -1,0 +1,21 @@
+{% include 'navbar.html' %}
+
+
+
+{% for post in posts %}
+
+<img class="img-fluid p-3" src="{{ post.image.url }}">
+
+<div> 
+{% if post.user_name %}
+<h2 class="ms-2 d-inline username">{{post.user_name}} </h2>
+{% else %}
+<h2 class="ms-2 d-inline username">Anonymous User</h2>
+{% endif %}
+<p>{{post.publish |timesince}} ago </p>
+
+<h4>{{post.title|truncatewords:10}}</h4>
+<p>{{post.description|truncatewords:100}}</p>
+</div>
+
+{% endfor %}

@@ -110,6 +110,21 @@ def DeletePost(request, id):
     return HttpResponseRedirect("/")
   return render(request, "post/delete_post.html", context)
 
+
+
+
+def searchPost(request):
+  searchTxt=request.POST.get('search-key')
+
+  post=Post.objects.filter(
+    Q(title__icontains=searchTxt)
+  )
+
+  return render(request, "post/search-result.html",{'posts':post})
+
+
+  
+
  
   
 

@@ -5,7 +5,7 @@ urlpatterns = [
 
   
   path('upload/',views.uploadPost, name ='upload'),
-
+  path('search/',views.searchPost, name='search'),
   path('delete_post/',views.DeletePost,name='delete_post'),
   path('<str:category>/edit-post/<str:id>/',views.editPostView,name='edit_post'),
   path('<str:category>/edit/<str:id>/',views.editPost,name='edit'),
